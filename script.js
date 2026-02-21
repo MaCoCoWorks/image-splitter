@@ -52,7 +52,10 @@ function toggleTheme() {
 
 themeToggle.addEventListener('click', toggleTheme);
 initTheme();
-
+document.getElementById('fileSelectBtn').addEventListener('click', () => {
+    fileInput.value = '';
+    fileInput.click();
+});
 // ========================================
 // ファイルアップロード機能
 // ========================================
