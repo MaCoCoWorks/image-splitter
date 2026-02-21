@@ -52,7 +52,8 @@ function toggleTheme() {
 
 themeToggle.addEventListener('click', toggleTheme);
 initTheme();
-document.getElementById('fileSelectBtn').addEventListener('click', () => {
+document.getElementById('fileSelectBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
     fileInput.value = '';
     fileInput.click();
 });

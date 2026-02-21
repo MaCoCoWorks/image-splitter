@@ -390,6 +390,14 @@ body {
     gap: 1.25rem;
 }
 
+@media (max-width: 768px) {
+    .controls-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+}
+
 .control-card {
     background: var(--bg-secondary);
     border-radius: 1rem;
