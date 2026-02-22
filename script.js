@@ -166,11 +166,15 @@ function updateGrid() {
 
     gridOverlay.innerHTML = '';
 
-    // 縮小率を考慮した実効サイズ
+    // 縮小率を考慮した実効サイズ（中央基点）
     const imgW = currentImage.naturalWidth;
     const imgH = currentImage.naturalHeight;
     const scaledW = imgW * currentScale;
     const scaledH = imgH * currentScale;
+    const marginX = (imgW - scaledW) / 2;
+    const marginY = (imgH - scaledH) / 2;
+    const marginXPercent = (marginX / imgW) * 100;
+    const marginYPercent = (marginY / imgH) * 100;
     const offXPercent = (offX / scaledW) * 100;
     const offYPercent = (offY / scaledH) * 100;
 
@@ -182,7 +186,7 @@ function updateGrid() {
         const line = document.createElement('div');
         line.className = 'grid-line horizontal';
         const basePercent = (i / rows) * (effectiveH / imgH) * 100;
-        line.style.top = `${basePercent + (offY > 0 ? offYPercent : 0)}%`;
+        line.style.top = `${marginYPercent + basePercent + (offY > 0 ? offYPercent * (scaledH / imgH) : 0)}%`;
         gridOverlay.appendChild(line);
     }
 
@@ -191,7 +195,7 @@ function updateGrid() {
         const line = document.createElement('div');
         line.className = 'grid-line vertical';
         const basePercent = (i / cols) * (effectiveW / imgW) * 100;
-        line.style.left = `${basePercent + (offX > 0 ? offXPercent : 0)}%`;
+        line.style.left = `${marginXPercent + basePercent + (offX > 0 ? offXPercent * (scaledW / imgW) : 0)}%`;
         gridOverlay.appendChild(line);
     }
 
