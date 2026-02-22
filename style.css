@@ -852,3 +852,33 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* ========================================
+   スマホ強制はみ出し防止（最終兵器）
+   ======================================== */
+@media screen and (max-width: 768px) {
+
+    html,
+    body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+    }
+
+    * {
+        box-sizing: border-box !important;
+        max-width: 100% !important;
+    }
+
+    .app-container,
+    .controls-container,
+    .control-card,
+    .control-group,
+    .btn {
+        width: 100% !important;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        word-break: break-all !important;
+        /* 長い文字も強制的に折り返す */
+    }
+}
