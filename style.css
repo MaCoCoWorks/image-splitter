@@ -628,11 +628,11 @@ body {
 }
 
 .offset-controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
-    justify-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .offset-group {
