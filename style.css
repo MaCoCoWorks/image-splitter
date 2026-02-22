@@ -631,15 +631,16 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: nowrap;
 }
 
 .offset-group {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    align-items: center;
+    flex: 1;
 }
 
 .offset-group label {
