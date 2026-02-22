@@ -883,21 +883,60 @@ body {
     }
 }
 
+/* ========================================
+   スマホ強制はみ出し防止（最終兵器・改）
+   ======================================== */
 @media screen and (max-width: 768px) {
-    /* ...中略（既存のコード）... */
 
-    /* 追加：入力欄をタッチ不可にし、幅を揃えて整列させる */
+    html,
+    body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+    }
+
+    * {
+        box-sizing: border-box !important;
+        max-width: 100% !important;
+    }
+
+    /* カードやコンテナの幅を100%に固定し、余計な余白を削る */
+    .app-container,
+    .controls-container,
+    .control-card {
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 1rem 0.75rem !important;
+        /* 左右の余白を少しだけ詰めて横幅を確保 */
+    }
+
+    /* 【重要】数字入力欄の幅をボタン（2.5rem）に近いサイズに固定する */
     .number-input,
     .offset-input {
-        pointer-events: none !important;
-        width: 4rem !important;
+        width: 3.5rem !important;
+        /* ボタンより少しだけ広くして2桁でも余裕を持たせる */
         flex: none !important;
+        /* 横に伸びる性質をオフにする */
+        pointer-events: none !important;
+        /* キーボード立ち上がり防止 */
         background-color: var(--bg-tertiary) !important;
     }
 
+    /* ボタンと入力欄を中央にギュッと寄せる */
     .number-input-wrapper,
     .offset-input-wrapper {
         justify-content: center !important;
         gap: 0.5rem !important;
+        /* ボタン同士の隙間を一定にする */
+        width: 100% !important;
+    }
+
+    /* オフセット調整の2カラムが狭い画面でぶつからないように調整 */
+    .offset-controls {
+        gap: 0.5rem !important;
+    }
+
+    .offset-group label {
+        font-size: 0.7rem !important;
+        /* ラベルを少し小さくしてはみ出しを防ぐ */
     }
 }
