@@ -501,9 +501,8 @@ body {
 }
 
 .num-btn {
-    width: 2.5rem !important;
-    height: 2.5rem !important;
-    min-width: 2.5rem !important;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 0.5rem;
     border: none;
     background: var(--bg-tertiary);
@@ -513,7 +512,6 @@ body {
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    flex-shrink: 0;
 }
 
 .num-btn:hover {
@@ -527,8 +525,7 @@ body {
 }
 
 .number-input {
-    flex: none;
-    width: 2.5rem;
+    flex: 1;
     height: 2.5rem;
     border: 2px solid var(--border-color);
     border-radius: 0.5rem;
@@ -539,7 +536,6 @@ body {
     text-align: center;
     outline: none;
     transition: border-color 0.2s ease;
-    padding: 0;
 }
 
 .number-input:focus {
@@ -868,6 +864,17 @@ body {
         width: 100% !important;
     }
 
+    /* ボタン・入力欄・アイコン以外の要素にだけmax-widthをかける */
+    div, section, article, main, header, footer, nav,
+    p, h1, h2, h3, h4, h5, h6, span, label,
+    img, canvas, video, table, ul, ol, li,
+    .upload-area, .preview-container, .controls-container,
+    .control-card, .control-group, .split-info, .tiles-grid,
+    .number-input-wrapper, .offset-input-wrapper, .offset-controls {
+        box-sizing: border-box !important;
+        max-width: 100% !important;
+    }
+
     .app-container,
     .controls-container,
     .control-card,
@@ -878,7 +885,15 @@ body {
         margin-left: 0 !important;
         margin-right: 0 !important;
         word-break: break-all !important;
-        /* 長い文字も強制的に折り返す */
+    }
+
+    /* ボタンと入力欄のサイズは絶対に変えない */
+    .num-btn {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+        min-width: 2.5rem !important;
+        max-width: 2.5rem !important;
+        flex-shrink: 0 !important;
     }
 }
 
@@ -900,20 +915,26 @@ body {
         width: 100% !important;
         min-width: 0 !important;
         padding: 1rem 0.75rem !important;
-        /* 左右の余白を少しだけ詰めて横幅を確保 */
     }
 
-    /* 【重要】数字入力欄の幅をボタンと同じ正方形（2.5rem）に固定する */
+    /* 【重要】数字入力欄の幅をボタン（2.5rem）に近いサイズに固定する */
     .number-input,
     .offset-input {
         width: 2.5rem !important;
         height: 2.5rem !important;
         flex: none !important;
-        /* 横に伸びる性質をオフにする */
         pointer-events: none !important;
-        /* キーボード立ち上がり防止 */
         background-color: var(--bg-tertiary) !important;
         padding: 0 !important;
+    }
+
+    /* ボタンのサイズを明示的に保護（max-widthに潰されないように） */
+    .num-btn {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+        min-width: 2.5rem !important;
+        max-width: 2.5rem !important;
+        flex-shrink: 0 !important;
     }
 
     /* ボタンと入力欄を中央にギュッと寄せる */
@@ -921,7 +942,6 @@ body {
     .offset-input-wrapper {
         justify-content: center !important;
         gap: 0.5rem !important;
-        /* ボタン同士の隙間を一定にする */
         width: 100% !important;
     }
 
@@ -932,6 +952,5 @@ body {
 
     .offset-group label {
         font-size: 0.7rem !important;
-        /* ラベルを少し小さくしてはみ出しを防ぐ */
     }
 }
