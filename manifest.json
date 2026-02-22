@@ -1,22 +1,21 @@
 {
-    "name": "Image Splitter",
+    "name": "MaCoCoWorks Image Splitter",
     "short_name": "ImgSplit",
-    "description": "画像を指定したグリッドで分割し、一括ダウンロードできるWebアプリ",
+    "description": "画像をグリッドで分割し、一括ダウンロードできるアプリ",
     "start_url": "./index.html",
-    "scope": "./",
     "display": "standalone",
     "background_color": "#f8fafc",
     "theme_color": "#6366f1",
     "orientation": "portrait-primary",
     "icons": [
         {
-            "src": "./icon-192.png",
+            "src": "icon-192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any maskable"
         },
         {
-            "src": "./icon-512.png",
+            "src": "icon-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
