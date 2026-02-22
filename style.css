@@ -882,3 +882,22 @@ body {
         /* 長い文字も強制的に折り返す */
     }
 }
+
+@media screen and (max-width: 768px) {
+    /* ...中略（既存のコード）... */
+
+    /* 追加：入力欄をタッチ不可にし、幅を揃えて整列させる */
+    .number-input,
+    .offset-input {
+        pointer-events: none !important;
+        width: 4rem !important;
+        flex: none !important;
+        background-color: var(--bg-tertiary) !important;
+    }
+
+    .number-input-wrapper,
+    .offset-input-wrapper {
+        justify-content: center !important;
+        gap: 0.5rem !important;
+    }
+}
