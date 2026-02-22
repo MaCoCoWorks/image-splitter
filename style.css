@@ -19,6 +19,23 @@ body {
     box-sizing: border-box;
 }
 
+/* メインの器を画面幅にぴったり合わせる設定 */
+.container,
+.app-container {
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    margin: 0 auto !important;
+}
+
+/* すべての要素のサイズ計算を「枠線込み」にする設定 */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 /* メインのコンテナが画面幅を超えないようにする */
 .container,
 .app-container {
