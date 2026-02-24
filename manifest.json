@@ -1,7 +1,7 @@
 {
-    "name": "MaCoCoWorks Image Splitter",
-    "short_name": "ImgSplit",
-    "description": "画像をグリッドで分割し、一括ダウンロードできるアプリ",
+    "name": "MaCoCoWorks Pita-Split",
+    "short_name": "Pita-Split",
+    "description": "画像をグリッドでピタッと分割し、一括ダウンロードできるアプリ",
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#f8fafc",
