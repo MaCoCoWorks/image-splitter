@@ -341,7 +341,7 @@ syncInputs(colSlider, colInput);
 syncInputs(rowSlider, rowInput);
 
 // プラス・マイナスボタン
-document.querySelectorAll('.num-btn').forEach(btn => {
+document.querySelectorAll('.num-btn[data-target]').forEach(btn => {
     btn.addEventListener('click', () => {
         const targetId = btn.dataset.target;
         const input = document.getElementById(targetId);
