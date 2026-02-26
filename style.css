@@ -1049,3 +1049,15 @@ body {
         font-size: 0.7rem !important;
     }
 }
+
+.bug-report-btn {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 1.25rem;
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    border-radius: 2rem;
+    color: var(--accent-color);
+    font-size: 0.875rem;
+    text-decoration: none;
+}
