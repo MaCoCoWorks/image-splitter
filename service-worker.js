@@ -1,4 +1,5 @@
-const CACHE_NAME = 'image-splitter-v1';
+const CACHE_VERSION = 'v2';
+const CACHE_NAME = 'pita-split-' + CACHE_VERSION;
 const urlsToCache = [
     '/',
     '/index.html',
@@ -13,7 +14,7 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                console.log('Opened cache');
+                console.log('Opened cache:', CACHE_NAME);
                 return cache.addAll(urlsToCache);
             })
     );
@@ -27,6 +28,7 @@ self.addEventListener('activate', (event) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
                     if (cacheName !== CACHE_NAME) {
+                        console.log('古いキャッシュを削除:', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
@@ -36,15 +38,28 @@ self.addEventListener('activate', (event) => {
     self.clients.claim();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - ネットワーク優先、失敗時はキャッシュから返す
 self.addEventListener('fetch', (event) => {
     event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                if (response) {
-                    return response;
-                }
-                return fetch(event.request);
+        fetch(event.request)
+            .then((networkResponse) => {
+                // ネットワークから取得できたらキャッシュを更新
+                const responseToCache = networkResponse.clone();
+                caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(event.request, responseToCache);
+                });
+                return networkResponse;
+            })
+            .catch(() => {
+                // オフライン時はキャッシュから返す
+                return caches.match(event.request);
             })
     );
+});
+
+// 「今すぐ更新」ボタンからのメッセージを受け取る
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
 });

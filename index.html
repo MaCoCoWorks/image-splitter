@@ -19,6 +19,13 @@
 </head>
 
 <body>
+    <!-- 更新通知バナー -->
+    <div class="update-banner hidden" id="updateBanner">
+        <span>🎉 新しいバージョンがあります</span>
+        <button id="updateBtn" class="update-btn">今すぐ更新</button>
+        <button id="updateDismiss" class="update-dismiss">✕</button>
+    </div>
+
     <div class="app-container">
         <!-- Header -->
         <header class="header">
@@ -190,9 +197,12 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <a href=https://forms.gle/PAitAHWQJ1PKhi7Q8 target="_blank" class="bug-report-btn">
-                🐛 バグを報告する
-            </a>
+            <div class="beta-footer">
+                <a href=https://forms.gle/PAitAHWQJ1PKhi7Q8 target="_blank" class="bug-report-btn" id="bugReportBtn">
+                    🐛 バグを報告する
+                </a>
+                <span class="beta-countdown" id="betaCountdown"></span>
+            </div>
             <p>© 2026 Pita-Split by MaCoCoWorks. All rights reserved.</p>
         </footer>
     </div>
@@ -207,9 +217,73 @@
 
     <script src="script.js"></script>
     <script>
+        // ========================================
+        // Service Worker 登録 & 更新通知
+        // ========================================
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./service-worker.js');
+            navigator.serviceWorker.register('./service-worker.js').then((reg) => {
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // 新しいバージョンが利用可能
+                            document.getElementById('updateBanner').classList.remove('hidden');
+                        }
+                    });
+                });
+            });
+
+            // 「今すぐ更新」ボタン
+            document.getElementById('updateBtn').addEventListener('click', () => {
+                navigator.serviceWorker.getRegistration().then((reg) => {
+                    if (reg && reg.waiting) {
+                        reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                    }
+                });
+                window.location.reload();
+            });
+
+            // バナーを閉じる
+            document.getElementById('updateDismiss').addEventListener('click', () => {
+                document.getElementById('updateBanner').classList.add('hidden');
+            });
+
+            // SW側でSKIP_WAITINGを受け取る処理はservice-worker.jsに追加済み
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                window.location.reload();
+            });
         }
+
+        // ========================================
+        // ベータテスト終了カウントダウン
+        // ========================================
+        (function () {
+            // ★ ベータテスト終了日をここで設定（未定の場合はnullのまま）
+            const BETA_END_DATE = null; // 例: new Date('2026-04-30')
+
+            const countdownEl = document.getElementById('betaCountdown');
+            const bugReportBtn = document.getElementById('bugReportBtn');
+
+            if (!BETA_END_DATE || !countdownEl) return;
+
+            function updateCountdown() {
+                const now = new Date();
+                const diff = BETA_END_DATE - now;
+
+                if (diff <= 0) {
+                    // ベータ終了 → バグ報告ボタンを非表示
+                    bugReportBtn.style.display = 'none';
+                    countdownEl.textContent = 'ベータテスト終了';
+                    return;
+                }
+
+                const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                countdownEl.textContent = `ベータテスト終了まであと ${days} 日`;
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 60000);
+        })();
     </script>
 </body>
 
